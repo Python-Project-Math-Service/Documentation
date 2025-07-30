@@ -1,12 +1,12 @@
 # Documentation
 
-# 🧮 Python Project Math Service
+# Python Project - Math Service
 
 A full-stack containerized microservice application offering mathematical operations through a FastAPI backend and a static HTML/CSS/JavaScript frontend. Both services are decoupled and run in separate Docker containers.
 
 ---
 
-## 📌 Overview
+##  Overview
 
 This project supports:
 - Exponentiation (Power)
@@ -18,7 +18,7 @@ Frontend and backend run independently and communicate via HTTP over `localhost`
 
 ---
 
-## 📂 Repository Structure
+##  Repository Structure
 ```
 Python-Project-Math-Service/
 ├── Backend/
@@ -42,17 +42,19 @@ Python-Project-Math-Service/
 ```
 ---
 
-## 🐍 Backend (FastAPI)
+##  Backend (FastAPI)
 
-### 🔧 Features
+###  Features
 
 - FastAPI REST endpoints
-- SQLite DB for persistent history
+- SQLite DB for persistence
 - Async background queue for factorial and fibonacci
 - Swagger API documentation at `/docs`
 - CORS enabled for external frontend access
+- Request data models defined using Pydantic for serialization/deserialization
+- Code linting enforced using Flake8
 
-### ▶️ How to Run Backend
+###  How to Run Backend
 
 ```bash
 cd Backend
@@ -65,12 +67,20 @@ docker run --name backend -p 8000:8000 math-backend
 | POST   | `/pow`       | `{ "base": 2, "exponent": 3 }` | Returns 8                   |
 | POST   | `/factorial` | `{ "number": 5 }`              | Returns 120                 |
 | POST   | `/fibonacci` | `{ "index": 6 }`               | Returns 8                   |
-| GET    | `/history`   | *none*                         | Returns all past operations |
-| GET    | `/health`    | *none*                         | Returns server status       |
 
-## 🌐 Frontend (HTML + CSS + JS)
+###  Code Quality & Style
 
-### 💡 Features
+- This project follows PEP8 coding conventions.
+- Static analysis and linting are performed using flake8. Example run:
+```bash
+flake8 app/
+```
+- 
+- 
+
+##  Frontend (HTML + CSS + JS)
+
+###  Features
 
 - Clean UI for power, factorial, and fibonacci calculations  
 - Responsive layout styled with **CSS**
@@ -78,7 +88,7 @@ docker run --name backend -p 8000:8000 math-backend
 - Dockerized and served using Nginx
 
   
-### ▶️ How to Run Frontend
+###  How to Run Frontend
 ```bash
 cd Frontend
 docker build -t math-frontend .
@@ -120,21 +130,28 @@ version: '3.8'
 
 services:
   backend:
-    build: ./Backend
+    build:
+      dockerfile: Dockerfile
+    container_name: math_microservice
     ports:
       - "8000:8000"
-    container_name: math-backend
+    volumes:
+      - ../math_operations.db:/math_operations.db
+    restart: always
 
   frontend:
-    build: ./Frontend
+    build:
+      context: ../Frontend
+      dockerfile: Dockerfile
+    container_name: frontend_static
     ports:
-      - "8080:80"
-    container_name: math-frontend
+      - "80:80"                    
     depends_on:
-      - backend
+      - fastapi                    
+    restart: always
 ```
 
-### ▶️ Run both services with:
+###  Run both services with:
 ```
 docker-compose up --build
 ```
