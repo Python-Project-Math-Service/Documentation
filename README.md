@@ -2,6 +2,10 @@
 
 # Python Project - Math Service
 
+## Team members:
+## - Marcos Dimitris Fetcu (CLD- Team Xception)
+## - Bogdan Nicolae Cotta (CLD- Team Xception)
+
 A full-stack containerized microservice application offering mathematical operations through a FastAPI backend and a static HTML/CSS/JavaScript frontend. Both services are decoupled and run in separate Docker containers.
 
 ---
