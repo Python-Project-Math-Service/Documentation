@@ -3,10 +3,10 @@
 # Python Project - Math Service
 
 ## Team members:
+
 - Marcos Dimitris Fetcu (CLD- Team Xception)
 - Bogdan Nicolae Cotta (CLD- Team Xception)
 
----
 
 ##  Overview
 
